@@ -1,6 +1,8 @@
 from django.test import TestCase
-
-
-# Create your tests here.
-
-
+from views import *
+"""
+to test if the user input password matching with the confirm password data
+"""
+class TestViews(TestCase):
+    def test_login(self):
+        assert password == confirmpassword
