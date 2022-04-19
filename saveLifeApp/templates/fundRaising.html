@@ -1,0 +1,51 @@
+<html>
+    <head> 
+        <title> Fund Raising </title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/fundraise.css'%}">
+    </head>
+    <body style="background-image: url(static/img/patient.jpg); background-size: 100% 100%;" >
+        <h1>SaveLife</h1>
+        <div class="search">
+            <a name="ref" href="patient">Home</a>
+            <a name="ref" href="aboutus">About</a>
+            <a name="ref" href="contactus">Contact</a>
+
+
+            <div class="search-container">
+                <form method="post">
+                    {% csrf_token %}
+                  <input type="text" placeholder="Enter Keywords.." name="keyword">
+                    <a name="search" href="search">
+                    <button type="button">Search</button> </a>
+
+                </form>
+              </div>
+          </div>
+        </a>
+        <br><br><br><br><br>
+        <div class="RegistrationBox">
+
+        <form class="box" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div class="RegistrationBox2">
+            <br><br><br><br><br><br><br><br>
+
+            <p>Upload Valid Patient Info:</p>
+            <input type="file" name="file"> <br>
+            <p>Upload Treatment Expense Record:</p>
+            <input type="file" name="file1"> <br>
+            <p>Upload Bank Statement:</p>
+            <input type="file" name="file2"> <br> <br>
+
+
+            <button type="submit">Request For Fundraising</button>
+        </div>
+        </form>
+        </div>
+        
+        
+        
+        
+    </body>
+</html>

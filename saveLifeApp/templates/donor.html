@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6248a8bc2abe5b455fc3b439/1fvlt68ud';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+        <title>Home</title>
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/donorhome.css'%}">
+    </head>
+    <body  style="background-image: url(static/img/donor1.jpg); background-size: 100% 100%;" >
+        <h1>SaveLife</h1>
+        <div class="search">
+            <a name="ref" class="active" href="donor">Home</a>
+            <a name="ref" href="about">About</a>
+            <a name="ref" href="contact">Contact</a>
+          </div>
+            <div class="lout">
+                <a href="login">
+        <button class="logout">logout</button><br>
+                </a>
+            </div>
+            <P class="don">Donor</P>
+        <form method="post">
+            {% csrf_token %}
+        <select class="select" name="donationType"><option>Live Donation</option> <option>After Death Donation</option> <option>Money Donation</option></select>
+            <button name="Donate">Donate</button>
+        <br>
+        </form>
+
+        <div class="lin">
+            <a href="patientlist">
+            <button class="dk">View patient List</button><br><br>
+            </a>
+            <a href="payment">
+                <button class="dk">payment</button><br><br></a>
+            <a href="tpcenter">
+            <button class="dk">Transplantation Centers</button><br><br>
+            </a>
+        </div>
+    </body>
+</html>
