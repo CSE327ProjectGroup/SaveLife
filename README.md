@@ -37,4 +37,4 @@
       ```
       
 ## Run the web app
-Now click on the [ip address](https://127.0.0.1:8000/) in your terminal and it will redirect you to the web app.
+Now click on the [ip address](https://127.0.0.1:8000/) in your terminal and it will redirect you to the web app. 
