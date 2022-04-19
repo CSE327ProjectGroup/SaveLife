@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Request For Organ</title>
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/organreq.css'%}">
+    </head>
+    <body  style="background-image: url(static/img/patient.jpg); background-size: 100% 100%;" >
+     <h1>SaveLife</h1>
+    <div class="search">
+            <a name="ref" href="patient">Home</a>
+            <a name="ref" href="aboutus">About</a>
+            <a name="ref" href="contactus">Contact</a>
+
+
+            <div class="search-container">
+                <form method="post">
+                    {% csrf_token %}
+                  <input type="text" placeholder="Enter Keywords.." name="keyword">
+                    <a name="search" href="search">
+                    <button type="button">Search</button> </a>
+
+                </form>
+              </div>
+          </div>
+
+
+
+        <div class="container">
+
+        <div class="RegistrationBox">
+        <h1>Request For Organ </h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="RegistrationBox3">
+            <p>Patient Name</p>
+            <input type="text" name="name" placeholder="Enter Patient Name"/> <br>
+            <p>Contact Number</p>
+        <input type="text" name="Num" placeholder="Mobile"/> <br>
+        <p>Choose Desired Organ</p>
+            <input type="radio" name="Organ" value="liver">liver<br>
+            <input type="radio" name="Organ" value="Cornea">Cornea<br>
+            <input type="radio" name="Organ" value="Kidney">Kidney<br>
+            <input type="radio" name="Organ" value="Pancreas">Pancreas<br>
+            <input type="radio" name="Organ" value="Heart">Heart<br>
+            <input type="radio" name="Organ" value="blood">Blood<br>
+            <input type="radio" name="Organ" value="lung">lung<br>
+            <input type="radio" name="Organ" value="Heart valve">Heart valve<br>
+            <input type="radio" name="Organ" value="Thymus">Thymus<br>
+            </div>
+            <div class="RegistrationBox2">
+            <p>Provide Medical Certificate:</p>
+            <input type="file" name="filename" required> <br><br><br>
+            <button>Submit Request</button>
+            </div>
+            </div>
+        </div>
+        </form>
+    </body>
+</html>
