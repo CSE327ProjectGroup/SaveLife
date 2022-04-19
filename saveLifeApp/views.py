@@ -5,6 +5,15 @@ from django.shortcuts import render, redirect, reverse
 
 
 def login(request):
+        """
+    This function will take inputs from the user and match with database, if it matches with database,
+     it will show result . Otherwise, it will give an error
+
+    :param request:takes a web request
+
+    :return: returns a web response
+
+    """
     if request.method == "POST":
         m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
         cursor = m.cursor()
@@ -59,12 +68,6 @@ def register(request):
         bGroup = request.POST.get('bGroup')
         identity = request.POST.get('identity')
 
-        def getPassword():
-            return password
-
-        def getConfirmPassword():
-            return confirmPassword
-
         if password == confirmPassword:
             c = "insert into register_form Values('{}','{}','{}','{}','{}','{}','{}','{}')".format(username, password,
                                                                                                    email, address,
@@ -85,6 +88,18 @@ def patient(request):
 
 
 def donor(request):
+      """
+      This function assigns the value of 'DonationType' sent from Donor.html by POST method  to variable DonationType
+      then checks whether DonationType equals to Live Donation or After Death Donation or Money Donation and redirect to
+      Donation.html, AfterDeathDonation.html , Payment.html respectively if the condition is true. Otherwise, it
+      redirects to Donor.html
+
+     :param request:
+
+     :return redirect:
+     :return render:
+
+     """
     if request.method == "POST":
         donationeType = request.POST.get('donationType')
         if donationeType == "Live Donation":
@@ -97,6 +112,15 @@ def donor(request):
 
 
 def donation(request):
+        """
+        This function takes values from Donation.html  by POST method, then assigns those values into variables
+        and store those variables in Donations datatable of the database by creating a connection with mysql. It
+        also uses FileSystemStorage() and file.save(file.name, file) functions to save the uploaded file.
+
+        :param request:
+        :return redirect:
+        :return render:
+        """
     if request.method == "POST":
         donorName = request.POST.get('name')
         donorMail = request.POST.get('email')
@@ -120,6 +144,16 @@ def donation(request):
 
 
 def afterDeath(request):
+        """
+    This function takes values from AfterDeathDonation.html  by POST method, then assigns those values into variables
+    and store those variables in After_Life_Donation datatable of the database by creating a connection with mysql. It
+    also uses FileSystemStorage() and file.save(file.name, file) functions to save the uploaded files.
+
+    :param request:
+
+    :return redirect:
+    :return render:
+    """
     if request.method == "POST":
         donorName = request.POST.get('name')
         donorNum = request.POST.get('num')
@@ -208,14 +242,29 @@ def search(request):
 
 
 def tpCenter(request):
+        """
+    This function show all the data
+
+    :param request: takes a web request
+
+    :return: returns a web response
+
+    """
     return render(request, "tpcenter.html")
 
 
 def tpCenterPatient(request):
+        """
+    This function show all the data
+
+    :param request: takes a web request
+
+    :return: returns a web response
+
+    """
     return render(request, "tpcenterp.html")
 
 
-global num
 
 
 def organRequest(request):
@@ -277,6 +326,12 @@ def forgetPass(request):
 
 
 def payment(request):
+        """
+    This function will select the payment type.
+    payment assign in flag.
+    check flag equal to cash payment.
+    If flag equal to cashpayment then redirect to the cashpay else redirect to the paypal.
+    """
     if request.method == "POST":
 
         flag = request.POST.get("payment")
@@ -288,6 +343,12 @@ def payment(request):
 
 
 def paymentPatient(request):
+        """
+    This function will select the payment type.
+    payment assign in flag.
+    check flag equal to cash payment.
+    If flag equal to cashpayment then redirect to the cashpay else redirect to the paypal.
+    """
     if request.method == "POST":
 
         flag = request.POST.get("payment")
@@ -299,6 +360,14 @@ def paymentPatient(request):
 
 
 def cashPayment(request):
+        """
+    Decleraing name variable for username.
+    Decleraing address variable for address.
+    Decleraing number variable for number.
+    Decleraing patientid variable for id.
+    All the given data write into the database.
+
+    """
     if request.method == "POST":
         name = request.POST.get("username")
         address = request.POST.get("address")
@@ -348,6 +417,9 @@ def patientList(request):
 
 
 def paypal(request):
+        """
+    This function Check the amount and pass the amount into the paypal gateway.
+    """
     if request.method == "POST":
         amount = request.POST.get("amount")
         content = {
