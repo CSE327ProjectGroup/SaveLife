@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Reset Password</title>
+	{% load static %}
+<link href="{% static 'css/forgetpass.css' %}" rel="stylesheet" type="text/css" media="all"/>
+
+
+</head>
+<body>
+
+<div class="elelment">
+	<h2>Reset Password Form</h2>
+	<div class="element-main">
+		<h1>Forgot Password</h1>
+		<form method="POST">
+			{%csrf_token%}
+			<input type="text" name="nid" placeholder="NID number">
+			<input type="text" name="password" placeholder="New Password">
+			<input type="submit" value="Reset my Password">
+			<p><a href="../">Login.</a>
+		</form>
+	</div>
+</div>
+
+
+</body>
+</html>

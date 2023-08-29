@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transplantation Centers</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tpcenter.css'%}">
+  </head>
+
+  <body  style="background-image: url(static/img/donor1.jpg); background-size: 100% 100%;" >
+    <div class="search">
+      <a name="ref" href="patient">Home</a>
+      <a name="ref" href="aboutus">About</a>
+      <a name="ref" href="contactus">Contact</a>
+      <a href="login">
+    </div>
+    <div class="lout">
+
+    <button class="logout">logout</button><br>
+
+    </a>
+    </div>
+    <div class="grid">
+      <div class="grid-item">
+        <div class="card">
+          <img class="card-img" src="{% static 'img/th.jpg'%}" alt="Ibn Sina Hospital" />
+          <div class="card-content">
+            <h1 class="card-header">Ibn Sina Hospital</h1>
+            <p class="card-text">
+              Organ transplantation service available.
+            </p>
+            <a href="https://ibnsina-hospital.com/en/">
+            <button class="card-btn">Visit<span>&rarr;</span></button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="card">
+          <img
+            class="card-img"
+            src="{% static 'img/apollo.jpg'%}"
+            alt="Apollo Hospital"
+          />
+          <div class="card-content">
+            <h1 class="card-header">Apollo Hospital</h1>
+            <p class="card-text">
+              Organ Transplantation service available.
+            </p>
+            <a href="http://apollodhaka.com/">
+            <button class="card-btn">Visit<span>&rarr;</span></button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="card">
+          <img class="card-img" src="{% static 'img/square.jpg'%}" alt="Square Hospital" />
+          <div class="card-content">
+            <h1 class="card-header">Square Hospital</h1>
+            <p class="card-text">
+              Organ transplantation service available.
+            </p>
+            <a href="https://www.squarehospital.com/">
+            <button class="card-btn">Visit<span>&rarr;</span></button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="card">
+          <img class="card-img" src="{% static 'img/united.jpg'%}" alt="United Hospital" />
+          <div class="card-content">
+            <h1 class="card-header">United Hospital</h1>
+            <p class="card-text">
+              Organ transplantation service available.
+            </p>
+            <a href="https://www.uhlbd.com/">
+            <button class="card-btn">Visit<span>&rarr;</span></button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

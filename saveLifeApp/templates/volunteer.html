@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6248a8bc2abe5b455fc3b439/1fvlt68ud';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+        <title>Home</title>
+
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/volunteerhome.css'%}">
+    </head>
+    <body style="background-image: url(static/img/volunteer.jpg); background-size: 100% 100%;" >
+
+        <h1>SaveLife</h1>
+     <div class="search">
+            <a name="ref" class="active" href="volunteer">Home</a>
+            <a name="ref" href="about">About</a>
+            <a name="ref" href="contact">Contact</a>
+     </div>
+
+     <p class="vol">Volunteer</p>
+        <a href="login">
+            <div class="lout">
+        <button class="logout">logout</button><br>
+        </div>
+        </a>
+        <form method="post">
+            {% csrf_token %}
+        <div class="lin">
+            <div class="container">
+            {% if content %}
+                    <p>No result found!</p>
+            {% else %}
+                <ul class="result">
+                     <a>Donor || Address || Number ||</a>
+                     {% for item in list1 %}
+                        <p>{{item}}</p>
+                     {% endfor %}
+                    </ul>
+            {% endif %}
+            </div>
+        </div>
+        </form>
+    <style>
+        .container {
+        font-size: 20px;
+        text-align: right;
+        transform: translate(-15%, 2%);
+}
+    </style>
+    </body>
+</html>

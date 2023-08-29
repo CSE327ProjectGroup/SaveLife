@@ -1,0 +1,68 @@
+<html>
+<head>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6248a8bc2abe5b455fc3b439/1fvlt68ud';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+
+    </script>
+    <!--End of Tawk.to Script-->
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/patienthome.css'%}">
+</head>
+<body style="background-image: url(static/img/patient.jpg); background-size: 100% 100%;">
+<h1>SaveLife</h1>
+<div class="search">
+    <a name="ref" class="active" href="patient">Home</a>
+    <a name="ref" href="aboutus">About</a>
+    <a name="ref" href="contactus">Contact</a>
+
+
+    <div class="search-container">
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter Keywords.." name="keyword">
+            <a name="search" href="search">
+                <button type="button">Search</button>
+            </a>
+
+        </form>
+    </div>
+</div>
+
+<p class="patient">Patient</p>
+<a href="login">
+    <div class="lout">
+        <button class="logout">logout</button>
+        <br>
+    </div>
+</a>
+<div class="lin">
+    <a href="organreq">
+        <button class="dk">Request For Organ</button>
+        <br><br><br>
+    </a>
+    <a href="fundraise">
+        <button class="dk">Fund Raising</button>
+        <br><br><br>
+    </a>
+
+    <a href="pay">
+        <button class="dk">Pay</button>
+        <br></a><br><br>
+
+    <a href="tpcenterp">
+        <button class="dk">Transplantation Centers</button>
+        <br><br><br>
+    </a>
+</div>
+</body>
+</html>

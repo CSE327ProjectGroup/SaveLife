@@ -4,16 +4,47 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 
 
+def login(request):
+    if request.method == "POST":
+        m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+        cursor = m.cursor()
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        c = "select * from register_form where email = '{}' and pass = '{}'".format(email, password)
+        cursor.execute(c)
+        t = tuple(cursor.fetchall())
+        if t == ():
+            messages.error(request, "Wrong Credentials! Please Try Again.")
+            return render(request, "login.html")
+        else:
+            c = "select identity from register_form where email = '{}' and pass = '{}'".format(email, password)
+            cursor.execute(c)
+            result = cursor.fetchall()
+            for row in result:
+                id = row[0]
+            if id == "Patient":
+                return redirect("patient")
+            elif id == "Donor":
+                return redirect("donor")
+            elif id == "Volunteer":
+                return redirect("volunteer")
+    return render(request, "login.html")
+
+
+global password, confirmPassword
+
+
 def register(request):
     """
     This function will take inputs from the user and checks if the values are valid, if valid then it will write
     into database inside the register_form table. Else it will give an error message and reload the page.
 
     :param request: Takes a web request.
-
-    :return: Returns a web response.
+    :return:
+         returns a web response.
+            :if: redirects to login page.
+            :else: redirects to register page.
     """
-
     if request.method == "POST":
 
         m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
@@ -27,6 +58,13 @@ def register(request):
         nid = request.POST.get('nid')
         bGroup = request.POST.get('bGroup')
         identity = request.POST.get('identity')
+
+        def getPassword():
+            return password
+
+        def getConfirmPassword():
+            return confirmPassword
+
         if password == confirmPassword:
             c = "insert into register_form Values('{}','{}','{}','{}','{}','{}','{}','{}')".format(username, password,
                                                                                                    email, address,
@@ -42,12 +80,143 @@ def register(request):
     return render(request, "register.html")
 
 
-def getPassword():
-    return password
+def patient(request):
+    return render(request, "patient.html")
 
 
-def getConfirmPassword():
-    return confirmPassword
+def donor(request):
+    if request.method == "POST":
+        donationeType = request.POST.get('donationType')
+        if donationeType == "Live Donation":
+            return redirect("donation")
+        elif donationeType == "After Death Donation":
+            return redirect("afterdeathdonation")
+        elif donationeType == "Money Donation":
+            return redirect("payment")
+    return render(request, "donor.html")
+
+
+def donation(request):
+    if request.method == "POST":
+        donorName = request.POST.get('name')
+        donorMail = request.POST.get('email')
+        donorAddress = request.POST.get('address')
+        donorNum = request.POST.get('contactNum')
+        donorNID = request.POST.get('nid')
+        donorBG = request.POST.get('bGroup')
+        organ = request.POST.get('organ')
+        uploaded_file = request.FILES["file"]
+        fs = FileSystemStorage()
+        fs.save(uploaded_file.name, uploaded_file)
+        m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+        cursor = m.cursor()
+        c = "insert into donations Values('{}','{}','{}','{}','{}','{}','{}','{}')".format(donorName, donorMail,
+                                                                                           donorAddress, donorNum,
+                                                                                           donorNID, donorBG, organ,
+                                                                                           uploaded_file.name)
+        cursor.execute(c)
+        m.commit()
+    return render(request, "donation.html")
+
+
+def afterDeath(request):
+    if request.method == "POST":
+        donorName = request.POST.get('name')
+        donorNum = request.POST.get('num')
+        donorNID = request.POST.get('nid')
+        organ = request.POST.get('Organ')
+        uploaded_file = request.FILES["file"]
+        uploaded_file1 = request.FILES["file2"]
+        fs = FileSystemStorage()
+        fs.save(uploaded_file.name, uploaded_file)
+        fs.save(uploaded_file1.name, uploaded_file1)
+        m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+        cursor = m.cursor()
+        c = "insert into afterlifedonation Values('{}','{}','{}','{}','{}','{}')".format(donorName,
+                                                                                         donorNum,
+                                                                                         donorNID,
+                                                                                         organ,
+                                                                                         uploaded_file.name,
+                                                                                         uploaded_file1.name)
+        cursor.execute(c)
+        m.commit()
+        return redirect("donor")
+    return render(request, "afterDeath.html")
+
+
+def volunteer(request):
+    """
+    this functions will take input from the user and check, if the values are valid then it will write into database
+    inside volunteer table otherwise it will give an error and reload the page
+
+    :param request takes a web request
+
+    :return: returns a web response
+    """
+    m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+    cursor = m.cursor()
+    c = "SELECT Name, Address, Mobile_Number FROM cash_pay"
+    cursor.execute(c)
+    r = cursor.fetchall()
+    list2 = []
+    flag = ""
+    for rows in r:
+        for i in range(0, 3):
+            print(rows[i])
+            n = rows[i]
+            flag = flag + str(n) + " || "
+        list2.append(flag)
+        flag = ""
+    print(list2)
+    return render(request, "volunteer.html", {'list1': list2})
+
+
+def search(request):
+    """"
+    This function will take input from user and it checks the input with database,
+    if it matches with the database it will show the results
+    otherwise it will say no results found massage and reload the page
+
+    :param request takes a web request
+
+    :return: returns a web response
+
+    """
+    if request.method == "POST":
+        m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+        cursor = m.cursor()
+        data = request.POST.get('keyword')
+
+        c = "select * from donor where Organ = '{}'".format(data)
+        cursor.execute(c)
+        r = cursor.fetchall()
+        string = ""
+        list2 = []
+        for rows in r:
+            for i in range(0, 3):
+                print(rows[i])
+                n = rows[i]
+                string = string + str(n) + " || "
+            list2.append(string)
+            string = ""
+
+        return render(request, "search.html", {'list1': list2})
+    else:
+        string = "No results found!"
+        list2 = [string]
+        return render(request, "search.html", {'list1': list2})
+
+
+def tpCenter(request):
+    return render(request, "tpcenter.html")
+
+
+def tpCenterPatient(request):
+    return render(request, "tpcenterp.html")
+
+
+global num
+
 
 def organRequest(request):
     """
@@ -58,7 +227,6 @@ def organRequest(request):
 
     :return: Returns a web response.
     """
-
     if request.method == "POST":
         name = request.POST.get('name')
         num = request.POST.get('Num')
@@ -72,3 +240,118 @@ def organRequest(request):
         cursor.execute(c)
         m.commit()
     return render(request, "organRequest.html")
+
+
+def fundRaise(request):
+    """
+    This function takes the fundraising request.
+    For fundraising user upload files and those files take into the uploadedFile , uploadedFile2 and uploadedFile2 variable.
+    All the given files save in temp/media.
+    """
+    if request.method == "POST":
+        uploaded_file = request.FILES["file"]
+        uploaded_file1 = request.FILES["file1"]
+        uploaded_file2 = request.FILES["file2"]
+        fs = FileSystemStorage()
+        fs.save(uploaded_file.name, uploaded_file)
+        m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+        cursor = m.cursor()
+        c = "insert into fund_raising Values('{}','{}','{}')".format(uploaded_file.name, uploaded_file1.name,
+                                                                     uploaded_file2.name)
+        cursor.execute(c)
+        m.commit()
+    return render(request, "fundRaising.html")
+
+
+def forgetPass(request):
+    if request.method == "POST":
+        m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+        cursor = m.cursor()
+        nid = request.POST.get('nid')
+        password = request.POST.get('password')
+        c = "UPDATE register_form SET pass = '{}' WHERE nid = '{}'".format(password, nid)
+        cursor.execute(c)
+        m.commit()
+        return redirect("login")
+    return render(request, "forgetpass.html")
+
+
+def payment(request):
+    if request.method == "POST":
+
+        flag = request.POST.get("payment")
+        if flag == "Cash Payment":
+            return redirect("cashpay")
+        else:
+            return redirect("paypal")
+    return render(request, "payment.html")
+
+
+def paymentPatient(request):
+    if request.method == "POST":
+
+        flag = request.POST.get("payment")
+        if flag == "Cash Payment":
+            return redirect("cashpay")
+        else:
+            return redirect("paypal")
+    return render(request, "paymentp.html")
+
+
+def cashPayment(request):
+    if request.method == "POST":
+        name = request.POST.get("username")
+        address = request.POST.get("address")
+        number = request.POST.get("number")
+        patientID = request.POST.get("id")
+        m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+        cursor = m.cursor()
+        c = "insert into cash_pay Values('{}','{}','{}','{}')".format(name, address, number, patientID)
+        cursor.execute(c)
+        m.commit()
+        return redirect("donor")
+    return render(request, "CashPayment.html")
+
+
+def about(request):
+    return render(request, "about.html")
+
+
+def aboutPatient(request):
+    return render(request, "aboutp.html")
+
+
+def contact(request):
+    return render(request, "contact.html")
+
+
+def contactPatient(request):
+    return render(request, "contactp.html")
+
+
+def patientList(request):
+    m = sql.connect(host="localhost", user="root", password="", database='savelifeproject')
+    cursor = m.cursor()
+    c = "SELECT Name, Organ FROM organ_requests"
+    cursor.execute(c)
+    r = cursor.fetchall()
+    list2 = []
+    flag = ""
+    for rows in r:
+        for i in range(0, 2):
+            print(rows[i])
+            n = rows[i]
+            flag = flag + str(n) + " || "
+        list2.append(flag)
+        flag = ""
+    return render(request, "patientlist.html", {'list1': list2})
+
+
+def paypal(request):
+    if request.method == "POST":
+        amount = request.POST.get("amount")
+        content = {
+            'amount': amount
+        }
+        return render(request, "paypal.html", content)
+    return render(request, "paypal.html")
