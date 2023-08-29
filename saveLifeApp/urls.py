@@ -6,6 +6,7 @@ from saveLifeApp import views
 
 urlpatterns = (
     [
+
         path('', views.login, name="login"),
         path('login', views.login, name="login"),
         path('register', views.register, name="register"),
@@ -29,6 +30,7 @@ urlpatterns = (
         path('aboutus', views.aboutPatient, name="aboutp"),
         path('contact', views.contact, name="contact"),
         path('contactus', views.contactPatient, name="contactp"),
+
     ]
 )
 
